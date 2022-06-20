@@ -1,0 +1,15 @@
+name: run unit tests
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run unit tests
+        uses: Raul6469/android-gradle-action@2.0.0
+        with:
+          script: test
