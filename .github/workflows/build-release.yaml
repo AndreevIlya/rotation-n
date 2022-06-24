@@ -8,12 +8,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Decode Keystore
-        id: decode_keystore
-        uses: timheuer/base64-to-file@v1.1
-        with:
-          fileName: 'rotation_n_key.jks'
-          fileDir: ./app/keystore
-          encodedString: ${{ secrets.KEYSTORE }}
+        env:
+          ENCODED_STRING: ${{ secrets.KEYSTORE }}
+        run: |
+          mkdir ./app/keystore
+          echo $ENCODED_STRING | base64 -di > ./app/keystore/rotation_n_key.jks
       - name: set up JDK 11
         uses: actions/setup-java@v1
         with:
