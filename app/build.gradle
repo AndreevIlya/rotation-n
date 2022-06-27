@@ -19,13 +19,6 @@ android {
             useSupportLibrary true
         }
     }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -54,16 +47,28 @@ android {
     }
 
     signingConfigs {
-        config {
+        release {
             storeFile = file("keystore/rotation_n_key.jks")
             storePassword System.getenv("SIGNING_STORE_PASSWORD")
             keyAlias System.getenv("SIGNING_KEY_ALIAS")
             keyPassword System.getenv("SIGNING_KEY_PASSWORD")
         }
+        debug {
+            storeFile file('../rotation-n-debug-key.jks')
+            storePassword 'c8cbdcdf'
+            keyAlias 'debug'
+            keyPassword 'c8cbdcdf'
+        }
     }
     buildTypes {
         release {
-            signingConfig signingConfigs.config
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
 }
