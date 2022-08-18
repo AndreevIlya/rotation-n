@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id("org.jmailen.kotlinter")
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -91,6 +93,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.1'
     implementation "com.google.android.material:compose-theme-adapter:1.1.12"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
