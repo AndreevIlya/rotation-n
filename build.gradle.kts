@@ -1,0 +1,14 @@
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.test) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.parcelize) apply false
+    alias(libs.plugins.compose) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.kotlinter)
+}
+
+tasks.create<Delete>("clean") {
+    delete(rootProject.layout.buildDirectory)
+}
