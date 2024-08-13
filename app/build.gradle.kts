@@ -11,10 +11,10 @@ plugins {
 
 android {
     compileSdk = 34
-    namespace = "com.example.rotation_n"
+    namespace = "com.example.rotationsubn"
 
     defaultConfig {
-        applicationId = "com.example.rotation_n"
+        applicationId = "com.example.rotationsubn"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -87,7 +87,7 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
-    namespace = "com.example.rotation_n"
+    namespace = "com.example.rotationsubn"
     buildFeatures {
         buildConfig = true
     }
@@ -115,8 +115,4 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.timber)
-}
-
-ksp {
-    //correctErrorTypes = true
 }

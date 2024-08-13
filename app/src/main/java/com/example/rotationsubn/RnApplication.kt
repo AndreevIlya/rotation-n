@@ -1,9 +1,9 @@
-package com.example.rotation_n
+package com.example.rotationsubn
 
 import android.app.Application
 import timber.log.Timber
 
-class RNApplication : Application() {
+class RnApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 

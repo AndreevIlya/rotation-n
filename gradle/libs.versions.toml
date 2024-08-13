@@ -1,5 +1,5 @@
 [versions]
-android-gradle-plugin = "8.5.1"
+android-gradle-plugin = "8.5.2"
 activity-compose = "1.9.1"
 compose-theme-adapter = "1.2.1"
 core-ktx = "1.13.1"

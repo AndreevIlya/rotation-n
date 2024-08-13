@@ -1,4 +1,4 @@
-package com.example.rotation_n.ui.theme
+package com.example.rotationsubn.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -66,7 +66,7 @@ private val DarkThemeColors = darkColorScheme(
 @Composable
 fun RotationNTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val colors = if (!useDarkTheme) {
         LightThemeColors
@@ -78,6 +78,6 @@ fun RotationNTheme(
         colorScheme = colors,
         typography = appTypography,
         shapes = Shapes,
-        content = content
+        content = content,
     )
 }
