@@ -1,0 +1,55 @@
+[versions]
+android-gradle-plugin = "8.5.2"
+activity-compose = "1.9.1"
+compose-theme-adapter = "1.2.1"
+core-ktx = "1.13.1"
+espresso-core = "3.6.1"
+hilt-android = "2.52"
+junit = "4.13.2"
+junit-version = "1.2.1"
+kotlin = "2.0.0"
+kotlinter = "4.4.1"
+ksp = "2.0.0-1.0.21"
+# @keep
+compile-sdk = "34"
+application-id = "com.example.rotation_n"
+lifecycle-runtime-ktx = "2.8.4"
+material3 = "1.2.1"
+# @keep
+min-sdk = "24"
+runtime-livedata = "1.6.8"
+# @keep
+target-sdk = "34"
+timber = "5.0.1"
+# @keep
+version-code = "1"
+# @keep
+version-name = "1.0"
+ui-tooling-preview-android = "1.6.8"
+
+[libraries]
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-core" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junit-version" }
+androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-runtime-ktx" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtime-livedata" }
+compose-theme-adapter = { module = "com.google.android.material:compose-theme-adapter", version.ref = "compose-theme-adapter" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android" }
+junit = { module = "junit:junit", version.ref = "junit" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+androidx-ui-tooling-preview-android = { group = "androidx.compose.ui", name = "ui-tooling-preview-android", version.ref = "ui-tooling-preview-android" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+android-test = { id = "com.android.test", version.ref = "android-gradle-plugin" }
+compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt-android" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlinter = { id = "org.jmailen.kotlinter", version.ref = "kotlinter" }

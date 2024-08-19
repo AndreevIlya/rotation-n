@@ -1,4 +1,4 @@
-package com.example.rotation_n.ui.theme
+package com.example.rotationsubn.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val md_theme_light_primary = Color(0xFF006d3a)
