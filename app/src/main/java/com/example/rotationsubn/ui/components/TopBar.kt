@@ -63,9 +63,7 @@ fun TopBar() {
 }
 
 @Composable
-fun DimensionMenu(
-    viewModel: TopBarViewModel = viewModel()
-) {
+fun DimensionMenu(viewModel: TopBarViewModel = viewModel()) {
     val dimension by viewModel.dimension.observeAsState()
     var expanded by remember { mutableStateOf(false) }
 
@@ -95,9 +93,9 @@ fun DimensionMenu(
             }
         }
         DropdownMenu(
+            modifier = Modifier.background(MaterialTheme.colorScheme.surface),
             expanded = expanded,
-            onDismissRequest = { expanded = false },
-            Modifier.background(MaterialTheme.colorScheme.surface)
+            onDismissRequest = { expanded = false }
         ) {
             LazyVerticalGrid(
                 modifier = Modifier.size(120.dp, 96.dp),
@@ -110,25 +108,18 @@ fun DimensionMenu(
 }
 
 @Composable
-fun DimensionMenuItem(
-    viewModel: TopBarViewModel = viewModel(),
-    dim: Int
-) {
+fun DimensionMenuItem(viewModel: TopBarViewModel = viewModel(), dim: Int) {
     val scope = rememberCoroutineScope()
-    DropdownMenuItem(
-        text = {
-            Text(
-                dim.toString(),
-                color = MaterialTheme.colorScheme.onSurface,
-                style = MaterialTheme.typography.labelLarge,
-                textAlign = TextAlign.Center
-            )
-        }, onClick = {
-            scope.launch {
-                viewModel.updateDimension(dim)
-            }
-        }
-    )
+    DropdownMenuItem(text = {
+        Text(
+            dim.toString(),
+            color = MaterialTheme.colorScheme.onSurface,
+            style = MaterialTheme.typography.labelLarge,
+            textAlign = TextAlign.Center
+        )
+    }, onClick = {
+        scope.launch { viewModel.updateDimension(dim) }
+    })
 }
 
 class TopBarViewModel : ViewModel() {
