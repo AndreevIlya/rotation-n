@@ -20,7 +20,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.rotationsubn.TestRnRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -109,10 +109,15 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.hilt.android)
     implementation(libs.androidx.ui.tooling.preview.android)
+    implementation(libs.androidx.ui.test.junit4.android)
     ksp(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
+    debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation(libs.hilt.android.testing)
     androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.mockito.core)
+
     implementation(libs.timber)
 }
