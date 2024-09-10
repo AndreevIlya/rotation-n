@@ -1,4 +1,4 @@
-package com.example.rotationsubn.ui.components.topbar
+package com.example.rotationsubn.topbar
 
 interface TopBarPresenter {
 

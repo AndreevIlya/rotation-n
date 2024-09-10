@@ -20,7 +20,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -33,15 +32,12 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.rotationsubn.R
-import javax.inject.Inject
 
-class TopBar @Inject constructor(
-    viewModelFactory: TopBarViewModel.Factory
+class TopBar(
+    private val currentDimension: Int,
+    private val onUpdateDimensionClicked: (Int) -> Unit
 ) {
-
-    private val viewModel = viewModelFactory.create()
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
@@ -68,7 +64,6 @@ class TopBar @Inject constructor(
 
     @Composable
     fun DimensionMenu() {
-        val dim by viewModel.dimension.observeAsState()
         var expanded by remember { mutableStateOf(false) }
 
         Box(
@@ -80,7 +75,7 @@ class TopBar @Inject constructor(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     modifier = Modifier.semantics { testTag = DIMENSION_MENU_CURRENT },
-                    text = (dim ?: 3).toString(),
+                    text = currentDimension.toString(),
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     style = MaterialTheme.typography.labelLarge
                 )
@@ -111,7 +106,7 @@ class TopBar @Inject constructor(
                 ) {
                     items((3..7).toList()) { dim ->
                         DimensionMenuItem(dim = dim) {
-                            viewModel.updateDimension(it)
+                            onUpdateDimensionClicked(dim)
                             expanded = false
                         }
                     }

@@ -2,8 +2,8 @@ package com.example.rotationsubn.di
 
 import com.example.rotationsubn.repo.MainRepo
 import com.example.rotationsubn.repo.MainRepoImpl
-import com.example.rotationsubn.ui.components.topbar.TopBarPresenter
-import com.example.rotationsubn.ui.components.topbar.TopBarPresenterImpl
+import com.example.rotationsubn.topbar.TopBarPresenter
+import com.example.rotationsubn.topbar.TopBarPresenterImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

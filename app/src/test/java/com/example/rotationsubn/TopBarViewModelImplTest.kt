@@ -3,7 +3,7 @@ package com.example.rotationsubn
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class TopBarViewModelTest {
+class TopBarViewModelImplTest {
 
     @Test
     fun addition_isCorrect() {

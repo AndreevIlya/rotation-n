@@ -1,4 +1,4 @@
-package com.example.rotationsubn.ui.components.topbar
+package com.example.rotationsubn.topbar
 
 import com.example.rotationsubn.repo.MainRepo
 import javax.inject.Inject
