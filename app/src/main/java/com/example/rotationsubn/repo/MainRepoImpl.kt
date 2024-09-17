@@ -17,6 +17,12 @@ class MainRepoImpl @Inject constructor(
             sharedPreferences.edit().putInt(DIMENSION, value).apply()
         }
 
+    override val minDimension: Int
+        get() = 3
+
+    override val maxDimension: Int
+        get() = 4
+
     private companion object {
         const val SHARED_PREFS_NAME = "main shared prefs"
         const val DIMENSION = "dimension"

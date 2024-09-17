@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import com.example.rotationsubn.R
 
 class TopBar(
+    private val dimensionRange: IntRange,
     private val currentDimension: Int,
     private val onUpdateDimensionClicked: (Int) -> Unit
 ) {
@@ -104,7 +105,7 @@ class TopBar(
                     modifier = Modifier.size(120.dp, 96.dp),
                     columns = GridCells.Fixed(3)
                 ) {
-                    items((3..7).toList()) { dim ->
+                    items(dimensionRange.toList()) { dim ->
                         DimensionMenuItem(dim = dim) {
                             onUpdateDimensionClicked(dim)
                             expanded = false
