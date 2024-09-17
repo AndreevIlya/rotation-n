@@ -1,8 +1,11 @@
 package com.example.rotationsubn.topbar
 
-import kotlinx.coroutines.flow.Flow
+import com.example.rotationsubn.mvi.MviReducer
+import com.example.rotationsubn.mvi.MviViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-interface TopBarViewModel {
-    val dimension: Flow<Int>
-    fun updateDimension(dim: Int)
-}
+@HiltViewModel
+class TopBarViewModel @Inject constructor(
+    reducer: MviReducer<TopBarState, TopBarAction>
+) : MviViewModel<TopBarState, TopBarAction>(reducer)

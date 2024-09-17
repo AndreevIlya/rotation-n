@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class TopBarFragment : Fragment() {
 
-    private val viewModel: TopBarViewModelImpl by viewModels<TopBarViewModelImpl>()
+    private val viewModel: TopBarViewModel by viewModels<TopBarViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,9 +28,11 @@ class TopBarFragment : Fragment() {
             ViewCompositionStrategy.DisposeOnLifecycleDestroyed(this@TopBarFragment)
         )
         setContent {
-            val dim by viewModel.dimension.collectAsState(3)
+            val state by viewModel.state.collectAsState()
             RNTheme {
-                TopBar(dim) { viewModel.updateDimension(it) }
+                TopBar(state.currentDimension) {
+                    viewModel.sendAction(TopBarAction.UpdateDimension(it))
+                }.Content()
             }
         }
     }
