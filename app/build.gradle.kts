@@ -110,6 +110,8 @@ dependencies {
 
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.appcompat)
+    debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview.android)
     implementation(libs.androidx.ui.test.junit4.android)
     ksp(libs.hilt.android.compiler)
