@@ -30,7 +30,7 @@ class TopBarFragment : Fragment() {
         setContent {
             val state by viewModel.state.collectAsState()
             RNTheme {
-                TopBar(state.dimensionRange, state.currentDimension) {
+                TopBar(state.dimensions, state.currentDimension) {
                     viewModel.sendAction(TopBarAction.UpdateDimension(it))
                 }.Content()
             }

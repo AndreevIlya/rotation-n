@@ -9,7 +9,10 @@ class TopBarReducer @Inject constructor(
 ) : MviReducer<TopBarState, TopBarAction> {
 
     override val initialState: TopBarState
-        get() = TopBarState(mainRepo.run { minDimension..maxDimension }, mainRepo.dimension)
+        get() = TopBarState(
+            dimensions = mainRepo.run { minDimension..maxDimension }.toList(),
+            currentDimension = mainRepo.dimension
+        )
 
     override fun reduce(state: TopBarState, action: TopBarAction): TopBarState {
         if (action is TopBarAction.UpdateDimension) {

@@ -23,7 +23,7 @@ class TopBarTest {
 
     @Test
     fun openDimensionsMenu() {
-        val topBar = TopBar(3..4, 3) { }
+        val topBar = TopBar(listOf(3, 4), 3) { }
         composeRule.setContent { RNTheme { topBar.Content() } }
         composeRule.onNodeWithTag(TopBar.DIMENSION_MENU_VISIBILITY_TOGGLER).performClick()
         composeRule.onNodeWithTag(TopBar.DIMENSION_MENU_CONTENT).assertIsDisplayed()
@@ -33,9 +33,12 @@ class TopBarTest {
 
     @Test
     fun onChosenDimensionFromMenu() {
-        val topBar = TopBar(3..5, 3) { assertEquals(4, it) }
+        val topBar = TopBar(listOf(3, 4, 5), 3) { assertEquals(4, it) }
         composeRule.setContent { RNTheme { topBar.Content() } }
-        composeRule.onNodeWithTag(TopBar.DIMENSION_MENU_CURRENT).assertTextEquals("3")
+        composeRule.onNodeWithTag(
+            testTag = TopBar.DIMENSION_MENU_CURRENT,
+            useUnmergedTree = true
+        ).assertTextEquals("3")
         composeRule.onNodeWithTag(TopBar.DIMENSION_MENU_VISIBILITY_TOGGLER).performClick()
         composeRule.onNodeWithTag(TopBar.DIMENSION_MENU_CONTENT).assertIsDisplayed()
         composeRule.onNodeWithTag("${TopBar.DIMENSION_MENU_ITEM} 4").performClick()

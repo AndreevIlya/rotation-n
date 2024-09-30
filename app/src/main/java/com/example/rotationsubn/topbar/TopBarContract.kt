@@ -4,7 +4,7 @@ import com.example.rotationsubn.mvi.Action
 import com.example.rotationsubn.mvi.State
 
 data class TopBarState(
-    val dimensionRange: IntRange,
+    val dimensions: List<Int>,
     val currentDimension: Int
 ) : State
 
