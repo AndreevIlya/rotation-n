@@ -121,7 +121,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     androidTestImplementation(libs.hilt.android.testing)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.core)
     androidTestImplementation(libs.mockito.android)
 
     implementation(libs.timber)

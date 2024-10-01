@@ -29,6 +29,8 @@ interface MviReducer<S : State, A : Action> {
 
     val initialState: S
 
-    fun reduce(state: S, action: A): S
+    suspend fun reduce(state: S, action: A): S
 
 }
+
+class WrongMviActionException(reason: String) : Exception(reason)
