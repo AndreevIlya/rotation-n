@@ -104,15 +104,25 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.constraintlayout)
     implementation(libs.compose.theme.adapter)
 
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.appcompat)
+    debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.ui.tooling.preview.android)
+    implementation(libs.androidx.ui.test.junit4.android)
     ksp(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
+    debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation(libs.hilt.android.testing)
     androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.mockito.android)
+
     implementation(libs.timber)
 }
