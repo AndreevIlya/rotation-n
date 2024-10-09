@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Rotation-N</string>
+    <string name="semantics_bottom_bar_show_display">Show display</string>
+    <string name="semantics_bottom_bar_show_parametrization">Show parametrization</string>
 </resources>
