@@ -69,7 +69,8 @@ class TopBar(
                             onClick = onBack,
                         ) {
                             Icon(
-                                imageVector = ImageVector.vectorResource(id = R.drawable.back),
+                                imageVector = ImageVector.vectorResource(id = R.drawable.ic_back),
+                                tint = RNTheme.colors.onPrimaryContainer,
                                 contentDescription = "top bar back",
                             )
                         }
