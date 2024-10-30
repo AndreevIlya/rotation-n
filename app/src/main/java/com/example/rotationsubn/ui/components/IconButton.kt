@@ -13,7 +13,6 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.DpSize
-import com.example.rotationsubn.ui.theme.RNTheme
 
 @Composable
 fun IconButton(
@@ -25,8 +24,7 @@ fun IconButton(
     Box(
         modifier = Modifier
             .semantics { semantics() }
-            .size(size)
-                then modifier,
+            .size(size) then modifier,
         contentAlignment = Alignment.Center,
     ) {
         if (icon != null) Icon(

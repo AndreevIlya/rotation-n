@@ -2,4 +2,9 @@
     <string name="app_name">Rotation-N</string>
     <string name="semantics_bottom_bar_show_display">Show display</string>
     <string name="semantics_bottom_bar_show_parametrization">Show parametrization</string>
+    
+    <string name="parametrization_dim3_yuler_precession">Precession angle</string>
+    <string name="parametrization_dim3_yuler_nutation">Nutation angle</string>
+    <string name="parametrization_dim3_yuler_rotation">Rotation angle</string>
+    <string name="parametrization_dim3_quaternion_1">Quaternion 1</string>
 </resources>
