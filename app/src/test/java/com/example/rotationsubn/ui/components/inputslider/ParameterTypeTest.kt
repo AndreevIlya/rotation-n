@@ -5,39 +5,36 @@ import org.junit.Test
 
 class ParameterTypeTest {
 
+    private val angle = ParameterType.Angle
+    private val quaternion = ParameterType.Quaternion
+
     @Test
     fun angleTrimOver360() {
-        val angle = ParameterType.Angle(400f)
-        assertEquals(360f, angle.round())
+        assertEquals(360f, angle.round(400f))
     }
 
     @Test
     fun angleTrimBelow0() {
-        val angle = ParameterType.Angle(-400f)
-        assertEquals(0f, angle.round())
+        assertEquals(0f, angle.round(-400f))
     }
 
     @Test
     fun angleRound() {
-        val angle = ParameterType.Angle(220.3456f)
-        assertEquals(220.3f, angle.round())
+        assertEquals(220.3f, angle.round(220.3456f))
     }
 
     @Test
     fun quaternionTrimOver1() {
-        val quaternion = ParameterType.Quaternion(4f)
-        assertEquals(1f, quaternion.round())
+        assertEquals(1f, quaternion.round(4f))
     }
 
     @Test
     fun quaternionTrimBelow0() {
-        val quaternion = ParameterType.Quaternion(-0.3f)
-        assertEquals(0f, quaternion.round())
+        assertEquals(0f, quaternion.round(-0.3f))
     }
 
     @Test
     fun quaternionRound() {
-        val quaternion = ParameterType.Quaternion(0.56789f)
-        assertEquals(0.568f, quaternion.round())
+        assertEquals(0.568f, quaternion.round(0.56789f))
     }
 }

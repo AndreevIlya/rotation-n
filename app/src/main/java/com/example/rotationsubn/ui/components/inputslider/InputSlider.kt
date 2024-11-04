@@ -46,18 +46,13 @@ import com.example.rotationsubn.ui.components.IconData
 import com.example.rotationsubn.ui.theme.RNTheme
 import kotlin.math.sqrt
 
-class InputSlider(
-    private val title: String,
-    private val parameter: ParameterType,
-    private val suggestions: List<TitledValue<Float>>,
-    private val onFixed: (Boolean) -> Unit
-) {
+class InputSlider(private val parameter: Parameter) {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun Content(isFixed: Boolean) {
+    fun Content() {
         val value = remember { mutableStateOf(parameter.value.toString()) }
-        val fixed = remember { mutableStateOf(isFixed) }
+        val isFixed = remember { mutableStateOf(parameter.isFixed) }
 
         Surface(tonalElevation = 8.dp) {
             Column(
@@ -69,7 +64,7 @@ class InputSlider(
                     .padding(RNTheme.gaps.row.md)
             ) {
                 Text(
-                    text = title,
+                    text = parameter.title,
                     color = RNTheme.colors.onSurface,
                     style = RNTheme.typography.body.lg
                 )
@@ -81,8 +76,7 @@ class InputSlider(
                     InputField(
                         value = value.value,
                         onChange = {
-                            parameter.value = it.let { if (it.isEmpty()) 0f else it.toFloat() }
-                            parameter.value = parameter.round()
+                            parameter.value = if (it.isEmpty()) 0f else it.toFloat()
                             value.value = it
                         },
                         onChanged = {
@@ -92,8 +86,7 @@ class InputSlider(
                     Spacer(modifier = Modifier.width(RNTheme.gaps.horizontal.lg))
                     IconButton(
                         modifier = Modifier.clickable {
-                            parameter.value -= parameter.step
-                            parameter.value = parameter.round()
+                            parameter.value -= parameter.type.step
                             value.value = parameter.value.toString()
                         },
                         semantics = { onClick(label = "$parameter minus", action = { true }) },
@@ -115,8 +108,7 @@ class InputSlider(
                     Spacer(modifier = Modifier.width(RNTheme.gaps.horizontal.md))
                     IconButton(
                         modifier = Modifier.clickable {
-                            parameter.value += parameter.step
-                            parameter.value = parameter.round()
+                            parameter.value += parameter.type.step
                             value.value = parameter.value.toString()
                         },
                         semantics = { onClick(label = "$parameter plus", action = { true }) },
@@ -131,8 +123,8 @@ class InputSlider(
                     IconButton(
                         modifier = Modifier
                             .clickable {
-                                fixed.value = !fixed.value
-                                onFixed(!fixed.value)
+                                isFixed.value = !isFixed.value
+                                parameter.isFixed = isFixed.value
                             }
                             .border(
                                 width = 2.dp,
@@ -141,7 +133,7 @@ class InputSlider(
                             ),
                         semantics = { onClick(label = "$parameter fixed", action = { true }) },
                         size = DpSize(24.dp, 24.dp),
-                        icon = if (fixed.value) IconData(
+                        icon = if (isFixed.value) IconData(
                             res = R.drawable.ic_cross,
                             tint = RNTheme.colors.onSurface,
                             description = "$parameter fixed"
@@ -152,7 +144,7 @@ class InputSlider(
                 Row(
                     modifier = Modifier.padding(start = 60.dp)
                 ) {
-                    for (suggestion in suggestions) {
+                    for (suggestion in parameter.suggestions) {
                         SuggestionChip(suggestion.title) {
                             parameter.value = suggestion.value
                             value.value = parameter.round().toString()
@@ -199,7 +191,7 @@ class InputSlider(
         Slider(
             modifier = modifier,
             value = value,
-            valueRange = parameter.start..parameter.end,
+            valueRange = parameter.type.start..parameter.type.end,
             colors = sliderColors(),
             track = @Composable { state: SliderState ->
                 SliderDefaults.Track(
@@ -263,15 +255,16 @@ fun AnglesInputSlider() {
     Column {
         Spacer(Modifier.height(30.dp))
         InputSlider(
-            title = stringResource(R.string.parametrization_dim3_yuler_precession),
-            parameter = ParameterType.Angle(30.00f),
-            suggestions = listOf(
-                TitledValue<Float>("45", 45f),
-                TitledValue<Float>("90", 90f),
-                TitledValue<Float>("135", 135f)
-            ),
-            onFixed = { }
-        ).Content(isFixed = false)
+            Parameter(
+                title = stringResource(R.string.parametrization_dim3_yuler_precession),
+                type = ParameterType.Angle,
+                suggestions = listOf(
+                    TitledValue<Float>("45", 45f),
+                    TitledValue<Float>("90", 90f),
+                    TitledValue<Float>("135", 135f)
+                )
+            ).apply { value = 150f }
+        ).Content()
     }
 }
 
@@ -281,14 +274,15 @@ fun QuaternionInputSlider() {
     Column {
         Spacer(Modifier.height(30.dp))
         InputSlider(
-            title = stringResource(R.string.parametrization_dim3_quaternion_1),
-            parameter = ParameterType.Quaternion(0.25f),
-            suggestions = listOf(
-                TitledValue<Float>("1/2", 0.5f),
-                TitledValue<Float>("1/\u221A3", 1 / sqrt(3f)),
-                TitledValue<Float>("1/\u221A2", 1 / sqrt(2f)),
-            ),
-            onFixed = { }
-        ).Content(isFixed = true)
+            Parameter(
+                title = stringResource(R.string.parametrization_dim3_quaternion_1),
+                type = ParameterType.Quaternion,
+                suggestions = listOf(
+                    TitledValue<Float>("1/2", 0.5f),
+                    TitledValue<Float>("1/\u221A3", 1 / sqrt(3f)),
+                    TitledValue<Float>("1/\u221A2", 1 / sqrt(2f)),
+                )
+            ).apply { value = 0.25f }
+        ).Content()
     }
 }
