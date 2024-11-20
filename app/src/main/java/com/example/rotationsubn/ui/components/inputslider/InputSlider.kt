@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.onClick
@@ -188,6 +189,8 @@ class InputSlider(private val parameter: Parameter) {
         onChanged: () -> Unit,
         hasNext: Boolean
     ) {
+        val focusManager = LocalFocusManager.current
+
         BasicTextField(
             modifier = Modifier
                 .semantics {
@@ -208,7 +211,10 @@ class InputSlider(private val parameter: Parameter) {
             singleLine = true,
             cursorBrush = SolidColor(RNTheme.colors.onSurface),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            keyboardActions = KeyboardActions { onChanged() },
+            keyboardActions = KeyboardActions {
+                focusManager.clearFocus()
+                onChanged()
+            },
             decorationBox = @Composable {
                 Box(
                     modifier = Modifier
