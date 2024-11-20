@@ -8,11 +8,7 @@ sealed class ParameterType(
     val step: Float
 ) {
     abstract fun round(value: Float): Float
-    fun trim(value: Float): Float = when {
-        value > end -> end
-        value < start -> start
-        else -> value
-    }
+    fun trim(value: Float): Float = value.coerceIn(start, end)
 
     data object Angle : ParameterType(0f, 360f, 1f) {
 

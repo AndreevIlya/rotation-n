@@ -1,5 +1,7 @@
 package com.example.rotationsubn.ui.components.inputslider
 
+import androidx.compose.ui.text.intl.Locale
+
 data class Parameter(
     val title: String,
     val type: ParameterType,
@@ -12,5 +14,13 @@ data class Parameter(
 
     var isFixed: Boolean = false
 
-    fun round() = type.round(value)
+    fun round(): String {
+        val rounded = type.round(value)
+        val precision = if (rounded >= 100) 1 else if (rounded >= 10) 2 else 3
+        return String.format(
+            locale = Locale.current.platformLocale,
+            format = "%4.${precision}f",
+            rounded
+        )
+    }
 }

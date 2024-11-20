@@ -32,8 +32,12 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.onClick
+import androidx.compose.ui.semantics.onImeAction
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
@@ -50,8 +54,8 @@ class InputSlider(private val parameter: Parameter) {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun Content() {
-        val value = remember { mutableStateOf(parameter.value.toString()) }
+    fun Content(hasNext: Boolean = false) {
+        val value = remember { mutableStateOf(parameter.round()) }
         val isFixed = remember { mutableStateOf(parameter.isFixed) }
 
         Surface(tonalElevation = 8.dp) {
@@ -76,20 +80,30 @@ class InputSlider(private val parameter: Parameter) {
                     InputField(
                         value = value.value,
                         onChange = {
-                            parameter.value = if (it.isEmpty()) 0f else it.toFloat()
-                            value.value = it
+                            value.value = when {
+                                it.startsWith(".") || it.startsWith(",") -> ""
+                                it.endsWith(".,") || it.endsWith("..") -> it.dropLast(1)
+                                else -> {
+                                    parameter.value = if (it.isEmpty()) 0f else it.toFloat()
+                                    it
+                                }
+                            }
                         },
-                        onChanged = {
-                            value.value = parameter.round().toString()
-                        }
+                        onChanged = { value.value = parameter.round() },
+                        hasNext = hasNext
                     )
                     Spacer(modifier = Modifier.width(RNTheme.gaps.horizontal.lg))
                     IconButton(
                         modifier = Modifier.clickable {
                             parameter.value -= parameter.type.step
-                            value.value = parameter.value.toString()
+                            value.value = parameter.round()
                         },
-                        semantics = { onClick(label = "$parameter minus", action = { true }) },
+                        semantics = {
+                            onClick(
+                                label = "${parameter.title} minus",
+                                action = { true }
+                            )
+                        },
                         size = DpSize(24.dp, 24.dp),
                         icon = IconData(
                             res = R.drawable.ic_minus,
@@ -103,15 +117,21 @@ class InputSlider(private val parameter: Parameter) {
                         value = value.value.let { if (it.isEmpty()) 0f else it.toFloat() }
                     ) {
                         parameter.value = it
-                        value.value = parameter.round().toString()
+                        value.value = parameter.round()
                     }
                     Spacer(modifier = Modifier.width(RNTheme.gaps.horizontal.md))
                     IconButton(
-                        modifier = Modifier.clickable {
-                            parameter.value += parameter.type.step
-                            value.value = parameter.value.toString()
+                        modifier = Modifier
+                            .clickable {
+                                parameter.value += parameter.type.step
+                                value.value = parameter.round()
+                            },
+                        semantics = {
+                            onClick(
+                                label = "${parameter.title} plus",
+                                action = { true }
+                            )
                         },
-                        semantics = { onClick(label = "$parameter plus", action = { true }) },
                         size = DpSize(24.dp, 24.dp),
                         icon = IconData(
                             res = R.drawable.ic_plus,
@@ -131,12 +151,17 @@ class InputSlider(private val parameter: Parameter) {
                                 color = RNTheme.colors.primary,
                                 shape = RNTheme.corners.sm
                             ),
-                        semantics = { onClick(label = "$parameter fixed", action = { true }) },
+                        semantics = {
+                            onClick(
+                                label = "${parameter.title} fixed",
+                                action = { true }
+                            )
+                        },
                         size = DpSize(24.dp, 24.dp),
                         icon = if (isFixed.value) IconData(
                             res = R.drawable.ic_cross,
                             tint = RNTheme.colors.onSurface,
-                            description = "$parameter fixed"
+                            description = "${parameter.title} fixed"
                         ) else null
                     )
                 }
@@ -147,7 +172,7 @@ class InputSlider(private val parameter: Parameter) {
                     for (suggestion in parameter.suggestions) {
                         SuggestionChip(suggestion.title) {
                             parameter.value = suggestion.value
-                            value.value = parameter.round().toString()
+                            value.value = parameter.round()
                         }
                         Spacer(Modifier.width(RNTheme.gaps.horizontal.md))
                     }
@@ -157,9 +182,24 @@ class InputSlider(private val parameter: Parameter) {
     }
 
     @Composable
-    private fun InputField(value: String, onChange: (String) -> Unit, onChanged: () -> Unit) {
+    private fun InputField(
+        value: String,
+        onChange: (String) -> Unit,
+        onChanged: () -> Unit,
+        hasNext: Boolean
+    ) {
         BasicTextField(
             modifier = Modifier
+                .semantics {
+                    contentDescription = "${parameter.title} input field"
+                    onImeAction(
+                        imeActionType = if (hasNext) ImeAction.Next else ImeAction.Done,
+                        action = {
+                            onChanged()
+                            true
+                        }
+                    )
+                }
                 .size(width = 58.dp, height = 32.dp)
                 .onFocusEvent { if (!it.isFocused) onChanged() },
             value = TextFieldValue(text = value, selection = TextRange(value.length)),
@@ -189,7 +229,9 @@ class InputSlider(private val parameter: Parameter) {
     @Composable
     private fun Slider(modifier: Modifier, value: Float, onValueChanged: (Float) -> Unit) {
         Slider(
-            modifier = modifier,
+            modifier = modifier.semantics {
+                contentDescription = "${parameter.title} slider"
+            },
             value = value,
             valueRange = parameter.type.start..parameter.type.end,
             colors = sliderColors(),
@@ -237,7 +279,8 @@ class InputSlider(private val parameter: Parameter) {
                     shape = RNTheme.corners.lg
                 )
                 .padding(RNTheme.gaps.row.sm)
-                .clickable(onClickLabel = "$parameter chip $title") { onClick() }
+                .clickable { onClick() }
+                .semantics { onClick(label = "${parameter.title} chip $title", action = { true }) },
         ) {
             Text(
                 text = title,

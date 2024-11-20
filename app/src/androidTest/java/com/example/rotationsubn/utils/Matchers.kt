@@ -7,3 +7,5 @@ import androidx.compose.ui.test.SemanticsMatcher
 fun hasClickLabel(label: String) = SemanticsMatcher("Clickable action with label: $label") {
     it.config.getOrNull(SemanticsActions.OnClick)?.label == label
 }
+
+fun hasNoChildren() = SemanticsMatcher("Has no children") { it.children.isEmpty() }
