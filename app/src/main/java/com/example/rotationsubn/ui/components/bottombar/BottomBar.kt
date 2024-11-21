@@ -3,34 +3,31 @@ package com.example.rotationsubn.ui.components.bottombar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.semantics.onClick
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.example.rotationsubn.R
+import com.example.rotationsubn.ui.components.IconButton
+import com.example.rotationsubn.ui.components.IconData
 import com.example.rotationsubn.ui.components.bottombar.ParametrizationButton.Companion.byType
 import com.example.rotationsubn.ui.theme.RNTheme
 
@@ -79,23 +76,21 @@ class BottomBar(
         isSelected: Boolean,
         onSelected: (ParametrizationButton) -> Unit
     ) {
-        Box(
+        IconButton(
             modifier = Modifier
-                .semantics { onClick(label = button.label, action = { true }) }
-                .size(width = 40.dp, height = 40.dp)
                 .selectable(selected = isSelected) {
                     onSelected(button)
                     button.onSelected()
                 }
                 .backgroundOrBorder(isSelected),
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                imageVector = ImageVector.vectorResource(id = button.iconRes),
+            semantics = { onClick(label = button.label, action = { true }) },
+            size = DpSize(40.dp, 40.dp),
+            icon = IconData(
+                res = button.iconRes,
                 tint = RNTheme.colors.run { if (isSelected) onPrimary else primary },
-                contentDescription = button.label,
+                description = button.label
             )
-        }
+        )
     }
 
     @Composable
@@ -108,10 +103,9 @@ class BottomBar(
                 R.string.semantics_bottom_bar_show_parametrization
             }
         )
-        Box(
+
+        IconButton(
             modifier = Modifier
-                .semantics { stateDescription = description }
-                .size(width = 56.dp, height = 56.dp)
                 .background(
                     color = RNTheme.colors.primary,
                     shape = RNTheme.corners.md
@@ -120,20 +114,18 @@ class BottomBar(
                     navState.value = !navState.value
                     onClicked(it)
                 },
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                imageVector = ImageVector.vectorResource(
-                    id = if (navState.value) {
-                        R.drawable.ic_nav_to_display
-                    } else {
-                        R.drawable.ic_nav_to_params
-                    }
-                ),
+            semantics = { stateDescription = description },
+            size = DpSize(56.dp, 56.dp),
+            icon = IconData(
+                res = if (navState.value) {
+                    R.drawable.ic_nav_to_display
+                } else {
+                    R.drawable.ic_nav_to_params
+                },
                 tint = RNTheme.colors.onPrimary,
-                contentDescription = description,
+                description = description
             )
-        }
+        )
     }
 
     @Composable
