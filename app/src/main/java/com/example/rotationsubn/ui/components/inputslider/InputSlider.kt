@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
@@ -61,15 +62,17 @@ class InputSlider(private val parameter: Parameter) {
         val value = remember { mutableStateOf(parameter.round()) }
         val isFixed = remember { mutableStateOf(parameter.isFixed) }
 
-        Surface(tonalElevation = 8.dp) {
-            Column(
-                modifier = Modifier
-                    .background(
-                        color = RNTheme.colors.surface,
-                        shape = RNTheme.corners.md
-                    )
-                    .padding(RNTheme.gaps.row.md)
-            ) {
+        Surface(
+            modifier = Modifier
+                .shadow(elevation = 8.dp, shape = RNTheme.corners.md)
+                .background(
+                    color = RNTheme.colors.surface,
+                    shape = RNTheme.corners.md
+                )
+                .padding(RNTheme.gaps.row.md),
+            tonalElevation = 8.dp
+        ) {
+            Column(Modifier.background(RNTheme.colors.surface)) {
                 Text(
                     text = parameter.title,
                     color = RNTheme.colors.onSurface,
@@ -299,7 +302,7 @@ class InputSlider(private val parameter: Parameter) {
         }
     }
 
-    private fun String.toFloatByLocale() : Float {
+    private fun String.toFloatByLocale(): Float {
         val numberFormat = NumberFormat.getNumberInstance(Locale("en_US").platformLocale)
         return if (isEmpty()) 0f else numberFormat.parse(this)?.toFloat() ?: 0f
     }
