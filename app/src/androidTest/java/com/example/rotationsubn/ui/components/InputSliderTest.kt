@@ -109,6 +109,10 @@ class InputSliderTest {
         rule.onNodeWithContentDescription(("$TITLE input field")).run {
             performTextReplacement(".")
             assertTextEquals("")
+            performTextReplacement(",")
+            assertTextEquals("")
+            performTextReplacement("-")
+            assertTextEquals("")
             performTextReplacement("2.,")
             assertTextEquals("2.")
             performTextReplacement("2..")
