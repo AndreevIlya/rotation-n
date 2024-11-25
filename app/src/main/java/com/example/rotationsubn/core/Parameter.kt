@@ -1,9 +1,10 @@
-package com.example.rotationsubn.ui.components.inputslider
+package com.example.rotationsubn.core
 
+import androidx.annotation.StringRes
 import androidx.compose.ui.text.intl.Locale
 
 data class Parameter(
-    val title: String,
+    @StringRes val title: Int,
     val type: ParameterType,
     val suggestions: List<TitledValue<Float>>,
 ) {

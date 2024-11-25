@@ -48,11 +48,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.example.rotationsubn.R
+import com.example.rotationsubn.core.Parameter
+import com.example.rotationsubn.core.Parametrization
 import com.example.rotationsubn.ui.components.IconButton
 import com.example.rotationsubn.ui.components.IconData
 import com.example.rotationsubn.ui.theme.RNTheme
 import java.text.NumberFormat
-import kotlin.math.sqrt
 
 class InputSlider(private val parameter: Parameter) {
 
@@ -61,6 +62,7 @@ class InputSlider(private val parameter: Parameter) {
     fun Content(hasNext: Boolean = false) {
         val value = remember { mutableStateOf(parameter.round()) }
         val isFixed = remember { mutableStateOf(parameter.isFixed) }
+        val title = stringResource(parameter.title)
 
         Surface(
             modifier = Modifier
@@ -74,7 +76,7 @@ class InputSlider(private val parameter: Parameter) {
         ) {
             Column(Modifier.background(RNTheme.colors.surface)) {
                 Text(
-                    text = parameter.title,
+                    text = title,
                     color = RNTheme.colors.onSurface,
                     style = RNTheme.typography.body.lg
                 )
@@ -107,7 +109,7 @@ class InputSlider(private val parameter: Parameter) {
                         },
                         semantics = {
                             onClick(
-                                label = "${parameter.title} minus",
+                                label = "$title minus",
                                 action = { true }
                             )
                         },
@@ -115,7 +117,7 @@ class InputSlider(private val parameter: Parameter) {
                         icon = IconData(
                             res = R.drawable.ic_minus,
                             tint = RNTheme.colors.onSurface,
-                            description = "$parameter minus"
+                            description = "$title minus"
                         )
                     )
                     Spacer(modifier = Modifier.width(RNTheme.gaps.horizontal.md))
@@ -135,7 +137,7 @@ class InputSlider(private val parameter: Parameter) {
                             },
                         semantics = {
                             onClick(
-                                label = "${parameter.title} plus",
+                                label = "$title plus",
                                 action = { true }
                             )
                         },
@@ -143,7 +145,7 @@ class InputSlider(private val parameter: Parameter) {
                         icon = IconData(
                             res = R.drawable.ic_plus,
                             tint = RNTheme.colors.onSurface,
-                            description = "$parameter plus"
+                            description = "$title plus"
                         )
                     )
                     Spacer(modifier = Modifier.width(RNTheme.gaps.horizontal.lg))
@@ -160,7 +162,7 @@ class InputSlider(private val parameter: Parameter) {
                             ),
                         semantics = {
                             onClick(
-                                label = "${parameter.title} fixed",
+                                label = "$title fixed",
                                 action = { true }
                             )
                         },
@@ -168,7 +170,7 @@ class InputSlider(private val parameter: Parameter) {
                         icon = if (isFixed.value) IconData(
                             res = R.drawable.ic_cross,
                             tint = RNTheme.colors.onSurface,
-                            description = "${parameter.title} fixed"
+                            description = "$title fixed"
                         ) else null
                     )
                 }
@@ -196,11 +198,12 @@ class InputSlider(private val parameter: Parameter) {
         hasNext: Boolean
     ) {
         val focusManager = LocalFocusManager.current
+        val title = stringResource(parameter.title)
 
         BasicTextField(
             modifier = Modifier
                 .semantics {
-                    contentDescription = "${parameter.title} input field"
+                    contentDescription = "$title input field"
                     onImeAction(
                         imeActionType = if (hasNext) ImeAction.Next else ImeAction.Done,
                         action = {
@@ -240,9 +243,11 @@ class InputSlider(private val parameter: Parameter) {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     private fun Slider(modifier: Modifier, value: Float, onValueChanged: (Float) -> Unit) {
+        val title = stringResource(parameter.title)
+
         Slider(
             modifier = modifier.semantics {
-                contentDescription = "${parameter.title} slider"
+                contentDescription = "$title slider"
             },
             value = value,
             valueRange = parameter.type.start..parameter.type.end,
@@ -284,6 +289,8 @@ class InputSlider(private val parameter: Parameter) {
 
     @Composable
     private fun SuggestionChip(title: String, onClick: () -> Unit) {
+        val paramTitle = stringResource(parameter.title)
+
         Box(
             modifier = Modifier
                 .background(
@@ -292,7 +299,7 @@ class InputSlider(private val parameter: Parameter) {
                 )
                 .padding(RNTheme.gaps.row.sm)
                 .clickable { onClick() }
-                .semantics { onClick(label = "${parameter.title} chip $title", action = { true }) },
+                .semantics { onClick(label = "$paramTitle chip $title", action = { true }) },
         ) {
             Text(
                 text = title,
@@ -315,15 +322,7 @@ fun AnglesInputSlider() {
     Column {
         Spacer(Modifier.height(30.dp))
         InputSlider(
-            Parameter(
-                title = stringResource(R.string.parametrization_dim3_yuler_precession),
-                type = ParameterType.Angle,
-                suggestions = listOf(
-                    TitledValue<Float>("45", 45f),
-                    TitledValue<Float>("90", 90f),
-                    TitledValue<Float>("135", 135f)
-                )
-            ).apply { value = 150f }
+            Parametrization.Dim3.TaitBryan.parameters[0].apply { value = 150f }
         ).Content()
     }
 }
@@ -334,15 +333,7 @@ fun QuaternionInputSlider() {
     Column {
         Spacer(Modifier.height(30.dp))
         InputSlider(
-            Parameter(
-                title = stringResource(R.string.parametrization_dim3_quaternion_1),
-                type = ParameterType.Quaternion,
-                suggestions = listOf(
-                    TitledValue<Float>("1/2", 0.5f),
-                    TitledValue<Float>("1/\u221A3", 1 / sqrt(3f)),
-                    TitledValue<Float>("1/\u221A2", 1 / sqrt(2f)),
-                )
-            ).apply { value = 0.25f }
+            Parametrization.Dim3.Quaternions.parameters[0].apply { value = 0.25f }
         ).Content()
     }
 }

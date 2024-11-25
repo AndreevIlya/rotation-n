@@ -8,7 +8,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.example.rotationsubn.ui.components.bottombar.BottomBar
-import com.example.rotationsubn.ui.components.bottombar.Parametrization
+import com.example.rotationsubn.core.Parametrization
 import com.example.rotationsubn.ui.components.bottombar.ParametrizationButton
 
 class BottomBarFragment : Fragment() {
@@ -33,7 +33,7 @@ class BottomBarFragment : Fragment() {
         )
         setContent {
             bottomBar.Content(
-                selectedParametrization = Parametrization.Dim3.TAIT_BRYAN,
+                selectedParametrization = Parametrization.Dim3.TaitBryan,
                 isDisplay = false
             )
         }

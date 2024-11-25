@@ -10,7 +10,7 @@ import androidx.compose.ui.test.onChild
 import androidx.compose.ui.test.performClick
 import com.example.rotationsubn.R
 import com.example.rotationsubn.ui.components.bottombar.BottomBar
-import com.example.rotationsubn.ui.components.bottombar.Parametrization
+import com.example.rotationsubn.core.Parametrization
 import com.example.rotationsubn.ui.components.bottombar.ParametrizationButton
 import com.example.rotationsubn.ui.theme.RNTheme
 import com.example.rotationsubn.utils.hasClickLabel
@@ -35,9 +35,9 @@ class BottomBarTest {
 
     @Test
     fun switchParamsButton() {
-        rule.setContent { RNTheme { bottomBar.Content(Parametrization.Dim3.YULER, false) } }
-        val yuler = rule.onNode(hasClickLabel(ParametrizationButton.YULER))
-        val quaternions = rule.onNode(hasClickLabel(ParametrizationButton.QUATERNIONS))
+        rule.setContent { RNTheme { bottomBar.Content(Parametrization.Dim3.Yuler, false) } }
+        val yuler = rule.onNode(hasClickLabel(Parametrization.Dim3.YULER))
+        val quaternions = rule.onNode(hasClickLabel(Parametrization.Dim3.QUATERNIONS))
         yuler.assertIsSelected()
         quaternions.assertIsNotSelected()
         quaternions.performClick()
@@ -47,7 +47,7 @@ class BottomBarTest {
 
     @Test
     fun toggleNavButton() {
-        rule.setContent { RNTheme { bottomBar.Content(Parametrization.Dim3.YULER, false) } }
+        rule.setContent { RNTheme { bottomBar.Content(Parametrization.Dim3.Yuler, false) } }
         val showDisplay = rule.activity.getString(R.string.semantics_bottom_bar_show_display)
         val showParams = rule.activity.getString(R.string.semantics_bottom_bar_show_parametrization)
         rule.onNode(hasStateDescription(showDisplay), useUnmergedTree = true).run {

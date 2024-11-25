@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.example.rotationsubn.R
+import com.example.rotationsubn.core.Parametrization
 import com.example.rotationsubn.ui.components.IconButton
 import com.example.rotationsubn.ui.components.IconData
 import com.example.rotationsubn.ui.components.bottombar.ParametrizationButton.Companion.byType
@@ -83,12 +84,12 @@ class BottomBar(
                     button.onSelected()
                 }
                 .backgroundOrBorder(isSelected),
-            semantics = { onClick(label = button.label, action = { true }) },
+            semantics = { onClick(label = button.parametrization.label, action = { true }) },
             size = DpSize(40.dp, 40.dp),
             icon = IconData(
-                res = button.iconRes,
+                res = button.parametrization.iconRes,
                 tint = RNTheme.colors.run { if (isSelected) onPrimary else primary },
-                description = button.label
+                description = button.parametrization.label
             )
         )
     }
@@ -156,7 +157,7 @@ fun BottomBarPreview() {
             ),
             onNav = {}
         ).Content(
-            selectedParametrization = Parametrization.Dim3.TAIT_BRYAN,
+            selectedParametrization = Parametrization.Dim3.TaitBryan,
             isDisplay = false
         )
     }

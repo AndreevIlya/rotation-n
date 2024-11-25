@@ -14,13 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
-import com.example.rotationsubn.R
+import com.example.rotationsubn.core.Parametrization
 import com.example.rotationsubn.ui.components.inputslider.InputSlider
-import com.example.rotationsubn.ui.components.inputslider.Parameter
-import com.example.rotationsubn.ui.components.inputslider.ParameterType
-import com.example.rotationsubn.ui.components.inputslider.TitledValue
 import com.example.rotationsubn.ui.theme.RNTheme
 
 class DisplayFragment : Fragment() {
@@ -43,38 +39,17 @@ class DisplayFragment : Fragment() {
                     verticalArrangement = Arrangement.Bottom
                 ) {
                     InputSlider(
-                        Parameter(
-                            title = stringResource(R.string.parametrization_dim3_quaternion_1),
-                            type = ParameterType.Quaternion,
-                            suggestions = quaternionSuggestions
-                        ).apply {
+                        Parametrization.Dim3.Quaternions.parameters[0].apply {
                             value = 0.45f
                             isFixed = true
                         }
                     ).Content(true)
                     Spacer(Modifier.height(RNTheme.gaps.vertical.lg))
                     InputSlider(
-                        Parameter(
-                            title = stringResource(R.string.parametrization_dim3_yuler_rotation),
-                            type = ParameterType.Angle,
-                            suggestions = angleSuggestions
-                        ).apply { value = 145f }
+                        Parametrization.Dim3.Yuler.parameters[0].apply { value = 245f }
                     ).Content()
                 }
             }
         }
-    }
-
-    private companion object {
-        val angleSuggestions = listOf(
-            TitledValue<Float>("45", 45f),
-            TitledValue<Float>("90", 90f),
-            TitledValue<Float>("135", 135f)
-        )
-        val quaternionSuggestions = listOf(
-            TitledValue<Float>("0.25", 0.25f),
-            TitledValue<Float>("0.333", 0.333f),
-            TitledValue<Float>("0.75", 0.75f)
-        )
     }
 }

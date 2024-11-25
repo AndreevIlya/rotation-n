@@ -1,4 +1,4 @@
-package com.example.rotationsubn.ui.components.inputslider
+package com.example.rotationsubn.core
 
 import junit.framework.TestCase.assertEquals
 import org.junit.Test

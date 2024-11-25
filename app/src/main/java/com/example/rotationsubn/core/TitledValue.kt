@@ -1,4 +1,4 @@
-package com.example.rotationsubn.ui.components.inputslider
+package com.example.rotationsubn.core
 
 data class TitledValue<T>(
     val title: String,

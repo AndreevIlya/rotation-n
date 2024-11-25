@@ -6,5 +6,15 @@
     <string name="parametrization_dim3_yuler_precession">Precession angle</string>
     <string name="parametrization_dim3_yuler_nutation">Nutation angle</string>
     <string name="parametrization_dim3_yuler_rotation">Rotation angle</string>
+    <string name="parametrization_dim3_tait_bryan_pitch">Pitch angle</string>
+    <string name="parametrization_dim3_tait_bryan_yaw">Yaw angle</string>
+    <string name="parametrization_dim3_tait_bryan_roll">Roll angle</string>
+    <string name="parametrization_dim3_quaternion_0">Quaternion 0</string>
     <string name="parametrization_dim3_quaternion_1">Quaternion 1</string>
+    <string name="parametrization_dim3_quaternion_2">Quaternion 2</string>
+    <string name="parametrization_dim3_quaternion_3">Quaternion 3</string>
+    <string name="parametrization_dim3_quaternion_axis_1">Quaternion axis 1</string>
+    <string name="parametrization_dim3_quaternion_axis_2">Quaternion axis 2</string>
+    <string name="parametrization_dim3_quaternion_axis_3">Quaternion axis 3</string>
+    <string name="parametrization_dim3_quaternion_axis_rotation">Quaternion rotation angle</string>
 </resources>
