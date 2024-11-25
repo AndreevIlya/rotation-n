@@ -42,7 +42,6 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
@@ -50,10 +49,11 @@ import androidx.compose.ui.unit.dp
 import com.example.rotationsubn.R
 import com.example.rotationsubn.core.Parameter
 import com.example.rotationsubn.core.Parametrization
+import com.example.rotationsubn.core.utils.filterToFloat
+import com.example.rotationsubn.core.utils.toFloatByUSLocale
 import com.example.rotationsubn.ui.components.IconButton
 import com.example.rotationsubn.ui.components.IconData
 import com.example.rotationsubn.ui.theme.RNTheme
-import java.text.NumberFormat
 
 class InputSlider(private val parameter: Parameter) {
 
@@ -88,15 +88,7 @@ class InputSlider(private val parameter: Parameter) {
                     InputField(
                         value = value.value,
                         onChange = {
-                            value.value = when {
-                                it.startsWith(".") || it.startsWith(",") || it.startsWith("-") -> ""
-                                it.endsWith(".,") || it.endsWith("..") -> it.dropLast(1)
-                                it.endsWith(",") -> it.dropLast(1)
-                                else -> {
-                                    parameter.value = it.toFloatByLocale()
-                                    it
-                                }
-                            }
+                            value.value = it.filterToFloat { parameter.value = it }
                         },
                         onChanged = { value.value = parameter.round() },
                         hasNext = hasNext
@@ -123,7 +115,7 @@ class InputSlider(private val parameter: Parameter) {
                     Spacer(modifier = Modifier.width(RNTheme.gaps.horizontal.md))
                     Slider(
                         modifier = Modifier.weight(1f, true),
-                        value = value.value.toFloatByLocale()
+                        value = value.value.toFloatByUSLocale()
                     ) {
                         parameter.value = it
                         value.value = parameter.round()
@@ -307,11 +299,6 @@ class InputSlider(private val parameter: Parameter) {
                 style = RNTheme.typography.label.lg
             )
         }
-    }
-
-    private fun String.toFloatByLocale(): Float {
-        val numberFormat = NumberFormat.getNumberInstance(Locale("en_US").platformLocale)
-        return if (isEmpty()) 0f else numberFormat.parse(this)?.toFloat() ?: 0f
     }
 
 }
