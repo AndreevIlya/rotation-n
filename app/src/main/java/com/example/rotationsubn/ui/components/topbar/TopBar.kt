@@ -28,8 +28,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
@@ -97,7 +97,7 @@ class TopBar(
                 modifier = Modifier
                     .width(72.dp)
                     .background(color = RNTheme.colors.surface, shape = RNTheme.corners.sm)
-                    .semantics { testTag = DIMENSION_MENU_CONTENT },
+                    .semantics { contentDescription = DIMENSION_MENU_CONTENT },
                 offset = DpOffset(x = 0.dp, y = RNTheme.gaps.vertical.md),
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
@@ -147,7 +147,7 @@ class TopBar(
     fun DimensionMenuItem(dim: Int, isActive: Boolean, onItemClicked: (Int) -> Unit) {
         Box(
             modifier = Modifier
-                .semantics { testTag = "$DIMENSION_MENU_ITEM $dim" }
+                .semantics { contentDescription = "$DIMENSION_MENU_ITEM $dim" }
                 .size(width = 32.dp, height = 36.dp)
                 .background(
                     color = RNTheme.colors.run { if (isActive) primary else surface },
@@ -169,13 +169,13 @@ class TopBar(
     private fun DimensionButton(dim: Int, onClicked: () -> Unit) {
         Box(
             modifier = Modifier
-                .semantics { testTag = DIMENSION_MENU_VISIBILITY_TOGGLER }
+                .semantics { contentDescription = DIMENSION_MENU_VISIBILITY_TOGGLER }
                 .size(width = 32.dp, height = 36.dp)
                 .clickable { onClicked() },
             contentAlignment = Alignment.Center
         ) {
             Text(
-                modifier = Modifier.semantics { testTag = DIMENSION_MENU_CURRENT },
+                modifier = Modifier.semantics { contentDescription = DIMENSION_MENU_CURRENT },
                 text = dim.toString(),
                 color = RNTheme.colors.onPrimaryContainer,
                 style = RNTheme.typography.title.md,
