@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -48,7 +51,9 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.example.rotationsubn.R
 import com.example.rotationsubn.core.Parameter
+import com.example.rotationsubn.core.ParameterType
 import com.example.rotationsubn.core.Parametrization
+import com.example.rotationsubn.core.TitledValue
 import com.example.rotationsubn.core.utils.filterToFloat
 import com.example.rotationsubn.core.utils.toFloatByUSLocale
 import com.example.rotationsubn.ui.components.IconButton
@@ -167,15 +172,15 @@ class InputSlider(private val parameter: Parameter) {
                     )
                 }
                 Spacer(Modifier.height(RNTheme.gaps.vertical.sm))
-                Row(
-                    modifier = Modifier.padding(start = 60.dp)
+                LazyRow(
+                    modifier = Modifier.padding(start = 60.dp, end = 26.dp),
+                    contentPadding = PaddingValues(end = RNTheme.gaps.horizontal.md)
                 ) {
-                    for (suggestion in parameter.suggestions) {
+                    items(parameter.suggestions) { suggestion ->
                         SuggestionChip(suggestion.title) {
                             parameter.value = suggestion.value
                             value.value = parameter.round()
                         }
-                        Spacer(Modifier.width(RNTheme.gaps.horizontal.md))
                     }
                 }
             }
@@ -321,6 +326,29 @@ fun QuaternionInputSlider() {
         Spacer(Modifier.height(30.dp))
         InputSlider(
             Parametrization.Dim3.Quaternions.parameters[0].apply { value = 0.25f }
+        ).Content()
+    }
+}
+
+@Preview
+@Composable
+fun ManySuggestionsInputSlider() {
+    Column {
+        Spacer(Modifier.height(30.dp))
+        InputSlider(
+            Parameter(
+                title = R.string.parametrization_dim3_quaternion_0,
+                type = ParameterType.Quaternion,
+                suggestions = listOf(
+                    TitledValue("long name", 0.5f),
+                    TitledValue("long name", 0.5f),
+                    TitledValue("long name", 0.5f),
+                    TitledValue("long name", 0.5f),
+                    TitledValue("long name", 0.5f),
+                    TitledValue("long name", 0.5f),
+                    TitledValue("long name", 0.5f)
+                )
+            )
         ).Content()
     }
 }
